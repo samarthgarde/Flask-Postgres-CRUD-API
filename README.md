@@ -42,4 +42,11 @@ This project demonstrates building, running, and testing backend APIs with datab
 ```bash
 git clone https://github.com/<your-username>/Flask-Postgres-CRUD-API.git
 cd Flask-Postgres-CRUD-API
-2️⃣ Run PostgreSQL Container
+```
+### 2️⃣ virtual environment set and activate it
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+### 2️⃣ Run PostgreSQL Container
+```bash
