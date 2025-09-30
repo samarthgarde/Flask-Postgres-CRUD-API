@@ -63,8 +63,8 @@ docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=pos
 ```
 ### 5️⃣ Build & Run postgres:15 container
 ```bash
-docker build -t postgres:13 .
-docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data postgres:13
+docker build -t postgres:15 .
+docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:15
 ```
 ### 6️⃣ check live logs
 ```bash
