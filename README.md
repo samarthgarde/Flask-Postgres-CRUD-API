@@ -58,13 +58,13 @@ docker volume create pgdata
 ```
 ### 4️⃣ Build & Run my-webapp container
 ```bash
-docker build -t my-webapp .
-docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@my_postgres:5432/cruddb -p 5000:5000 my-webapp
+docker build -t flask-app .
+docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@my_postgres:5432/cruddb -p 5000:5000 flask-app
 ```
 ### 5️⃣ Build & Run postgres:15 container
 ```bash
-docker build -t postgres:15 .
-docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data postgres:15
+docker build -t postgres:13 .
+docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data postgres:13
 ```
 ### 6️⃣ check live logs
 ```bash
