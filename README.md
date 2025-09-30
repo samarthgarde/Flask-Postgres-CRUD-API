@@ -48,5 +48,77 @@ cd Flask-Postgres-CRUD-API
 python3 -m venv venv
 source venv/bin/activate
 ```
-### 2️⃣ Run PostgreSQL Container
+### 2️⃣ Create network
 ```bash
+docker network create mynetwork
+```
+### 3️⃣ Create volume
+```bash
+docker volume create pgdata
+```
+### 4️⃣ Build & Run my-webapp container
+```bash
+docker build -t my-webapp .
+docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@my_postgres:5432/cruddb -p 5000:5000 my-webapp
+```
+### 5️⃣ Build & Run postgres:15 container
+```bash
+docker build -t postgres:15 .
+docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data postgres:15
+```
+### 6️⃣ check live logs
+```bash
+docker logs my-python-container -f
+docker logs my-postgres -f
+```
+### 7 Network Check
+```bash
+docker network ls
+docker network inspect mynetwork
+```
+### 8 Environment Variable Check (DATABASE_URL)
+```bash
+docker exec -it my-python-container env | grep DATABASE_URL
+```
+### Test APIs using Postman / Curl
+Flask app run http://localhost:5000
+**Add Student (POST)**
+```bash
+POST http://localhost:5000/students
+Body (JSON):
+{
+  "firstname": "Samarth",
+  "lastname": "Garde",
+  "birthdate": "2002-05-14",
+  "email": "samarth@example.com",
+  "enrolled_date": "2025-09-25"
+}
+```
+**Get All Students (GET)**
+```bash
+GET http://localhost:5000/students
+```
+**Get Student by ID (GET)**
+```bash
+GET http://localhost:5000/students/1
+```
+**Update Item (PUT)**
+PUT http://localhost:5000/items/1
+Body (JSON):
+```bash
+{
+  "name": "New Item Name",
+  "description": "Updated Description"
+}
+```
+**Delete Item (DELETE)**
+```bash
+DELETE http://localhost:5000/items/1
+```
+### 9 Direct DB Check
+```bash
+docker exec -it my_postgres psql -U postgres -d cruddb
+SELECT * FROM students;
+SELECT * FROM items;
+```
+
