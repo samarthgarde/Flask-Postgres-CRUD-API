@@ -49,26 +49,26 @@ cd Flask-Postgres-CRUD-API
 python3 -m venv venv
 source venv/bin/activate
 ```
-###3️⃣Cre Create network
+### 3️⃣Cr Create network
 ```bash
 docker network create mynetwork
 ```
-###4️⃣ Create volume
+### 4️⃣ Create volume
 ```bash
 docker volume create pgdata
 ```
-###B5️⃣ uiBuild & Run my-webapp container
+### 5️⃣ uiild & Run my-webapp container
 ```bash
 docker build -t flask-app .
 docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@my_postgres:5432/cruddb -p 5000:5000 flask-app
 ```
-###6️⃣ uilBuild & Run postgres:15 container
+### 6️⃣ uiild & Run postgres:15 container
 ```bash
 cd database/
 docker build -t postgres:15 .
 docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:15
 ```
-###7️⃣che check live logs
+### 7️⃣ch Check live logs
 ```bash
 docker logs my-postgres -f
 docker logs my-python-container -f
@@ -82,6 +82,7 @@ docker network inspect mynetwork
 ```bash
 docker exec -it my-python-container env | grep DATABASE_URL
 ```
+---
 
 ### Test APIs using Postman / Curl / Browser (for GET requests)
 
