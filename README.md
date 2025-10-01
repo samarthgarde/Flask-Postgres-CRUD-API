@@ -202,3 +202,16 @@ SELECT * FROM students;
 SELECT * FROM items;
 ```
 ![image](Screenshot3.png)
+
+----
+
+### 🎯 Objective
+This project is intended to:
+- Teach Flask + PostgreSQL integration
+- Demonstrate CRUD operations with REST API
+- Provide practical Docker containerization experience
+
+---
+
+### 👨‍💻 Author
+Made with ❤️ Samarth Garde
