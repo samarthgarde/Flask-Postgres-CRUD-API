@@ -89,6 +89,8 @@ docker exec -it my-python-container env | grep DATABASE_URL
 **Test "Get all students" (GET)**
 - **URL**:http://localhost:5001/students
 - **Method**: GET
+![image](Screenshot1.png)
+
 ```bash
 curl http://localhost:5001/students
 ```
@@ -106,7 +108,7 @@ curl http://localhost:5001/students
   "enrolled_date": "2025-09-30"
 }
 ```
-![image](Screenshot 96.png)
+![image](Screenshot2.png)
 
 - Using curl:
 ```bash
@@ -199,3 +201,4 @@ SELECT * FROM items;
 SELECT * FROM students;
 SELECT * FROM items;
 ```
+![image](Screenshot3.png)
