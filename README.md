@@ -10,14 +10,16 @@ This project demonstrates building, running, and testing backend APIs with datab
 ---
 
 ## 📂 Project Structure
-| File | Description |
-|------|-------------|
-| `app.py` | Main Flask application with CRUD endpoints |
-| `requirements.txt` | Python dependencies |
-| `Dockerfile` | Docker configuration for Flask app |
-| `.gitignore` | Ignored files for Git |
-| `README.md` | This file |
-
+```bash
+flask-postgres-crud/
+├── Dockerfile # Dockerfile to containerize the Flask app
+├── app.py # Main Flask application
+├── database/ # PostgreSQL database setup scripts
+|     └── Dockerfile  # Dockerfile to the containerizeto postgresql
+├── requirements.txt # Python dependencies
+├── venv/ # Python virtual environment
+└── README.md
+```
 ---
 
 ## ⚡ Features
@@ -40,7 +42,7 @@ This project demonstrates building, running, and testing backend APIs with datab
 
 ### 1️⃣ Clone Repo
 ```bash
-git clone https://github.com/<your-username>/Flask-Postgres-CRUD-API.git
+git clone https://github.com/samarthgarde/Flask-Postgres-CRUD-API.git
 cd Flask-Postgres-CRUD-API
 ```
 ### 2️⃣ virtual environment set and activate it
@@ -63,13 +65,14 @@ docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=pos
 ```
 ### 5️⃣ Build & Run postgres:15 container
 ```bash
+cd database/
 docker build -t postgres:15 .
 docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:15
 ```
 ### 6️⃣ check live logs
 ```bash
-docker logs my-python-container -f
 docker logs my-postgres -f
+docker logs my-python-container -f
 ```
 ### 7 Network Check
 ```bash
@@ -80,45 +83,119 @@ docker network inspect mynetwork
 ```bash
 docker exec -it my-python-container env | grep DATABASE_URL
 ```
-### Test APIs using Postman / Curl
-Flask app run http://localhost:5000
-**Add Student (POST)**
+### Test APIs using Postman / Curl / Browser (for GET requests)
+
+**Test "Get all students" (GET)**
+- **URL**:http://localhost:5001/students
+- **Method**: GET
 ```bash
-POST http://localhost:5000/students
-Body (JSON):
-{
-  "firstname": "Samarth",
-  "lastname": "Garde",
-  "birthdate": "2002-05-14",
-  "email": "samarth@example.com",
-  "enrolled_date": "2025-09-25"
-}
+curl http://localhost:5001/students
 ```
-**Get All Students (GET)**
-```bash
-GET http://localhost:5000/students
-```
-**Get Student by ID (GET)**
-```bash
-GET http://localhost:5000/students/1
-```
-**Update Item (PUT)**
-PUT http://localhost:5000/items/1
-Body (JSON):
+---
+
+**Test "Add student" (POST)**
+**URL**: http://localhost:5001/students
+**Method**: POST
+**Body (JSON)**:
 ```bash
 {
-  "name": "New Item Name",
-  "description": "Updated Description"
+  "firstname": "samarth",
+  "lastname": "garde",
+  "birthdate": "2000-01-01",
+  "email": "samarthgarde@example.com",
+  "enrolled_date": "2025-09-30"
 }
 ```
-**Delete Item (DELETE)**
+- Using curl:
 ```bash
-DELETE http://localhost:5000/items/1
+curl -X POST http://localhost:5001/students \
+-H "Content-Type: application/json" \
+-d '{"firstname":"samarth",garde":"Doe","birthdate":"2000-01-01","email":"samarthgarde@example.com","enrolled_date":"2025-09-30"}'
 ```
-### 9 Direct DB Check
+----
+
+**Test "Get single student" (GET)**
+**URL:** http://localhost:5001/students/1
+
+**Method:** GET
+```bash
+curl http://localhost:5001/students/1
+```
+---
+
+**Test "Add item" (POST)**
+**URL:** http://localhost:5001/items
+**Body (JSON):**
+```bash
+{
+  "name": "Book",
+  "description": "Python Programming Book"
+}
+```
+- usage with curl:
+```bash
+curl -X POST http://localhost:5001/items \
+-H "Content-Type: application/json" \
+-d '{"name":"Laptop","description":"Gaming laptop"}'
+```
+- **Get all items**
+```bash
+curl http://localhost:5001/items/1
+```
+- **Update an item**
+```bash
+{"id":1,"name":"Laptop Pro","description":"High-end gaming laptop"}
+```
+- **Delete an item**
+```bash
+curl -X DELETE http://localhost:5001/items/1
+```
+
+### 9 Using psql in terminal (Postgres CLI)
+**Step 1: Access Postgres container**
 ```bash
 docker exec -it my_postgres psql -U postgres -d cruddb
+```
+**Step 2: Show tables**
+```bash
+\dt
+```
+**Step 3: Select data in a table format**
+```bash
 SELECT * FROM students;
 SELECT * FROM items;
 ```
+- To exit psql
+```bash
+\q
+```
+----
 
+### Using a GUI tool
+- **pgAdmin** (official, free)
+**Steps:**
+**1.Add a new server**
+- Right-click Servers → Create → Server…
+- General tab:
+- Name: MyDockerPostgres (any name)
+- Connection tab:
+- Host name/address: localhost
+- Port: 5432
+- Username: postgres
+- Password: postgres
+**2.Save Password: check the box**
+**Click Save.**
+  
+**3.Verify connection**
+- Expand Servers → **MyDockerPostgres** → **Databases** → **cruddb**→ **Schemas** → **public** → **Tables**
+- You should see your tables: students and items.
+
+**View data in table format**
+Right-click table (e.g., students) → View/Edit Data → All Rows
+pgAdmin shows data in a spreadsheet-like format.
+You can edit, delete, or insert rows directly in pgAdmin.
+Also, you can run custom SQL queries in Query Tool (Tools → Query Tool)
+```bash
+SELECT * FROM students;
+SELECT * FROM items;
+```
