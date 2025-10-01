@@ -39,46 +39,46 @@ flask-postgres-crud/
 
 ## 📦 Setup & Run
 
-### 1️⃣ Clone Repo
+### Clone Repo
 ```bash
 git clone https://github.com/samarthgarde/Flask-Postgres-CRUD-API.git
 cd Flask-Postgres-CRUD-API
 ```
-### 2️⃣ virtual environment set and activate it
+### Virtual environment set and activate it
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
-### 3️⃣Cr Create network
+### Create network
 ```bash
 docker network create mynetwork
 ```
-### 4️⃣ Create volume
+### Create volume
 ```bash
 docker volume create pgdata
 ```
-### 5️⃣ uiild & Run my-webapp container
+### Build & Run my-webapp container
 ```bash
 docker build -t flask-app .
 docker run -d --name my-python-container --network mynetwork -e DATABASE_URL=postgresql://postgres:postgres@my_postgres:5432/cruddb -p 5000:5000 flask-app
 ```
-### 6️⃣ uiild & Run postgres:15 container
+### Build & Run postgres:15 container
 ```bash
 cd database/
 docker build -t postgres:15 .
 docker run -d --name my_postgres --network mynetwork -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=cruddb -v pgdata:/var/lib/postgresql/data -p 5432:5432 postgres:15
 ```
-### 7️⃣ch Check live logs
+### Check live logs
 ```bash
 docker logs my-postgres -f
 docker logs my-python-container -f
 ```
-### 8️⃣ Network Check
+### Network Check
 ```bash
 docker network ls
 docker network inspect mynetwork
 ```
-### 9️⃣ Environment Variable Check (DATABASE_URL)
+### Environment Variable Check (DATABASE_URL)
 ```bash
 docker exec -it my-python-container env | grep DATABASE_URL
 ```
@@ -106,6 +106,8 @@ curl http://localhost:5001/students
   "enrolled_date": "2025-09-30"
 }
 ```
+![image](Screenshot 96.png)
+
 - Using curl:
 ```bash
 curl -X POST http://localhost:5001/students \
