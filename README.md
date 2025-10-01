@@ -34,7 +34,6 @@ flask-postgres-crud/
 - **Backend:** Python 3.11, Flask 2.3.2  
 - **Database:** PostgreSQL 15  
 - **Containerization:** Docker  
-- **Python Libraries:**psycopg2-binary==2.9.3, Werkzeug==2.3.0
 
 ---
 
@@ -92,7 +91,6 @@ docker exec -it my-python-container env | grep DATABASE_URL
 ```bash
 curl http://localhost:5001/students
 ```
----
 
 **Test "Add student" (POST)**
 - **URL**: http://localhost:5001/students
@@ -113,7 +111,6 @@ curl -X POST http://localhost:5001/students \
 -H "Content-Type: application/json" \
 -d '{"firstname":"samarth",garde":"Doe","birthdate":"2000-01-01","email":"samarthgarde@example.com","enrolled_date":"2025-09-30"}'
 ```
-----
 
 **Test "Get single student" (GET)**
 - **URL:** http://localhost:5001/students/1
@@ -121,11 +118,10 @@ curl -X POST http://localhost:5001/students \
 ```bash
 curl http://localhost:5001/students/1
 ```
----
 
 **Test "Add item" (POST)**
-**URL:** http://localhost:5001/items
-**Body (JSON):**
+- **URL:** http://localhost:5001/items
+- **Body (JSON):**
 ```bash
 {
   "name": "Book",
@@ -184,22 +180,18 @@ SELECT * FROM items;
 - Port: 5432
 - Username: postgres
 - Password: postgres
-- **2.Save Password: check the box**
+- **Save Password: check the box**
 - **Click Save.**
   
-- **3.Verify connection**
+- **Verify connection**
 - Expand Servers → **MyDockerPostgres** → **Databases** → **cruddb**→ **Schemas** → **public** → **Tables**
 - You should see your tables: students and items.
 
 **View data in table format**
-Right-click table (e.g., students) → View/Edit Data → All Rows
-
-pgAdmin shows data in a spreadsheet-like format.
-
-You can edit, delete, or insert rows directly in pgAdmin.
-
-Also, you can run custom SQL queries in Query Tool (Tools → Query Tool)
-
+- Right-click table (e.g., students) → View/Edit Data → All Rows
+- pgAdmin shows data in a spreadsheet-like format.
+- You can edit, delete, or insert rows directly in pgAdmin.
+- Also, you can run custom SQL queries in Query Tool (Tools → Query Tool)
 ```bash
 SELECT * FROM students;
 SELECT * FROM items;
